@@ -1,32 +1,44 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="bg">
+    <loading v-if="loading" />
+    <div class="page-wraper">
+      <header-nav v-if="recommendNews.length !== 0" :news="recommendNews"/>
+      <router-view :key="$route.path"/>
+      <footer-nav/>
     </div>
-    <router-view/>
+    <button class="scroltop fa fa-chevron-up" ></button>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+// @ is an alias to /src
+import Loading from '@/components/layout/Loading.vue'
+import HeaderNav from '@/components/layout/Header.vue'
+import FooterNav from '@/components/layout/Footer.vue'
 
-#nav {
-  padding: 30px;
+export default {
+  components: {
+    Loading,
+    HeaderNav,
+    FooterNav
+  },
+  data () {
+    return {
+      loading: true,
+      recommendNews: []
+    }
+  },
+  created () {
+    this.$http.forkJoin([
+      this.$http.get(['api', 'index_article'], { kind: 0 }), // Costumes
+      this.$http.get(['api', 'index_article'], { kind: 1 }), // Posing
+      this.$http.get(['api', 'index_article'], { kind: 2 }) // Ideas
+    ]).then(res => {
+      this.recommendNews = res.map(x => x.slice(0, 4))
+    })
+  },
+  mounted () {
+    setTimeout(() => { this.loading = false }, 1000)
+  }
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
