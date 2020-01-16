@@ -21,6 +21,7 @@ import jQuery from 'jquery'
 import { VueMasonryPlugin } from 'vue-masonry'
 
 import './assets/plugins/owl-carousel/owl.carousel.js'
+import 'animate.css/animate.css'
 
 const api = new APIService()
 
