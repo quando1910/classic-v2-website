@@ -54,7 +54,7 @@
                   <div class="row">
                     <div class="col-lg-4" v-for="art of hotArticles.slice(1,4)" :key="art.title">
                       <div class="blog-card post-grid grid-style m-b30 small-triangle">
-                        <div class="blog-card-media" :style="{backgroundImage: `url(https://manage.theclassic.studio/${art.images[0].name.url})`}">
+                        <div class="blog-card-media" :style="{backgroundImage: `url(https://manage.hischool.com.vn/${art.images[0].name.url})`}">
                         </div>
                         <div class="blog-card-info">
                           <div class="title-sm">
